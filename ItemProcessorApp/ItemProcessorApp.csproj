@@ -12,5 +12,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.3" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="database_script.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

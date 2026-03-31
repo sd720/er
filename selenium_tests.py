@@ -20,7 +20,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
-BASE_URL = "http://localhost:5000"
+BASE_URL = "http://err.runasp.net"
 ADMIN_EMAIL = "admin@test.com"
 ADMIN_PASSWORD = "Admin@123"
 
@@ -32,7 +32,7 @@ def driver():
     """Create a single browser session for all tests."""
     options = webdriver.ChromeOptions()
     options.add_argument("--start-maximized")
-    # options.add_argument("--headless")  # Uncomment for headless mode
+    options.add_argument("--headless")  # Enable headless mode
     svc = Service(ChromeDriverManager().install())
     d = webdriver.Chrome(service=svc, options=options)
     d.implicitly_wait(5)

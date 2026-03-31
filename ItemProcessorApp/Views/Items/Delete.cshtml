@@ -8,7 +8,7 @@
         <h2>🗑️ Delete Item</h2>
         <p class="page-desc">This action cannot be undone.</p>
     </div>
-    <a href="/Items" class="btn btn-ghost">← Back to Items</a>
+    <a href="/Items/Index" class="btn btn-ghost">← Back to Items</a>
 </div>
 
 <div class="card form-card danger-card">
@@ -23,6 +23,6 @@
     <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="form-actions">
         @Html.AntiForgeryToken()
         <button type="submit" class="btn btn-danger">Yes, Delete</button>
-        <a href="/Items" class="btn btn-ghost">Cancel</a>
+        <a href="/Items/Index" class="btn btn-ghost">Cancel</a>
     </form>
 </div>
