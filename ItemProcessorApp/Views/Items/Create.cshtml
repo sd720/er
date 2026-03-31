@@ -1,0 +1,41 @@
+@model ItemProcessorApp.Models.Item
+@{
+    ViewData["Title"] = "Add Item";
+}
+
+<div class="page-header">
+    <div>
+        <h2>➕ Add New Item</h2>
+        <p class="page-desc">Create a new item with its weight.</p>
+    </div>
+    <a href="/Items" class="btn btn-ghost">← Back to Items</a>
+</div>
+
+<div class="card form-card">
+    <form asp-action="Create" method="post" novalidate>
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" placeholder="e.g. Raw Steel Block" />
+            <span asp-validation-for="Name" class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Weight"></label>
+            <input asp-for="Weight" type="number" step="0.0001" min="0.0001" placeholder="e.g. 500.00" />
+            <span asp-validation-for="Weight" class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" rows="3" placeholder="Optional description…"></textarea>
+            <span asp-validation-for="Description" class="field-error"></span>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save Item</button>
+            <a href="/Items" class="btn btn-ghost">Cancel</a>
+        </div>
+    </form>
+</div>

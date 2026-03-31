@@ -1,0 +1,37 @@
+@model ItemProcessorApp.Models.ProcessedItem
+
+<div class="tree-node @(Model.ParentId == null ? "tree-root" : "tree-child")">
+    <div class="tree-node-card">
+        <div class="tree-node-info">
+            <span class="tree-icon">@(Model.ParentId == null ? "🔵" : "🔹")</span>
+            <div>
+                <strong class="tree-item-name">@Model.Item?.Name</strong>
+                <span class="tree-meta">
+                    Output: <strong>@Model.OutputWeight kg</strong>
+                    &nbsp;·&nbsp; @Model.ProcessedAt.ToString("MMM dd, yyyy HH:mm")
+                    @if (!string.IsNullOrEmpty(Model.Notes))
+                    {
+                        <span>&nbsp;·&nbsp; <em>@Model.Notes</em></span>
+                    }
+                </span>
+            </div>
+        </div>
+        <div class="tree-node-actions">
+            <form asp-controller="Process" asp-action="Delete" asp-route-id="@Model.Id" method="post"
+                  onsubmit="return confirm('Delete this item and all its children?')">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-sm btn-danger">🗑 Delete</button>
+            </form>
+        </div>
+    </div>
+
+    @if (Model.Children != null && Model.Children.Any())
+    {
+        <div class="tree-children">
+            @foreach (var child in Model.Children)
+            {
+                await Html.RenderPartialAsync("_TreeNode", child);
+            }
+        </div>
+    }
+</div>

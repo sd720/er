@@ -1,0 +1,61 @@
+@model IEnumerable<ItemProcessorApp.Models.Item>
+@{
+    ViewData["Title"] = "Items";
+}
+
+<div class="page-header">
+    <div>
+        <h2>📦 Items</h2>
+        <p class="page-desc">Manage all input items and their weights.</p>
+    </div>
+    <a href="/Items/Create" class="btn btn-primary">+ Add Item</a>
+</div>
+
+<div class="card">
+    <form method="get" action="/Items" class="search-bar">
+        <input type="text" name="search" value="@ViewBag.Search" placeholder="Search by name or description…" />
+        <button type="submit" class="btn btn-secondary">Search</button>
+        @if (!string.IsNullOrEmpty(ViewBag.Search?.ToString()))
+        {
+            <a href="/Items" class="btn btn-ghost">✕ Clear</a>
+        }
+    </form>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <p>No items found. <a href="/Items/Create">Add your first item</a>.</p>
+        </div>
+    }
+    else
+    {
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Weight (kg)</th>
+                    <th>Description</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td><strong>@item.Name</strong></td>
+                        <td><span class="badge">@item.Weight kg</span></td>
+                        <td>@(item.Description ?? "—")</td>
+                        <td>@item.CreatedAt.ToString("MMM dd, yyyy")</td>
+                        <td class="actions">
+                            <a href="/Items/Edit/@item.Id" class="btn btn-sm btn-secondary">Edit</a>
+                            <a href="/Items/Delete/@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

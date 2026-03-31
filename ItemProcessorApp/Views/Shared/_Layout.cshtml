@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] – Item Processor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+
+@{
+    bool isLoginPage = Context.Request.Path.StartsWithSegments("/Auth");
+}
+
+@if (!isLoginPage)
+{
+    <nav class="sidebar">
+        <div class="sidebar-brand">
+            <span class="brand-icon">⚙</span>
+            <span class="brand-name">ItemProcessor</span>
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="/Items" class="nav-item @(Context.Request.Path.StartsWithSegments("/Items") ? "active" : "")">
+                    <span class="nav-icon">📦</span> Items
+                </a>
+            </li>
+            <li>
+                <a href="/Process/Create" class="nav-item @(Context.Request.Path.StartsWithSegments("/Process/Create") ? "active" : "")">
+                    <span class="nav-icon">⚗️</span> Process Item
+                </a>
+            </li>
+            <li>
+                <a href="/Process/Tree" class="nav-item @(Context.Request.Path.StartsWithSegments("/Process/Tree") ? "active" : "")">
+                    <span class="nav-icon">🌳</span> Tree View
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <span class="user-avatar">👤</span>
+                <span class="user-name">@Context.Session.GetString("UserName")</span>
+            </div>
+            <a href="/Auth/Logout" class="logout-btn">Sign Out</a>
+        </div>
+    </nav>
+    <div class="main-wrapper">
+        <main class="main-content">
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success">✅ @TempData["Success"]</div>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-error">❌ @TempData["Error"]</div>
+            }
+            @RenderBody()
+        </main>
+    </div>
+}
+else
+{
+    @RenderBody()
+}
+
+<script src="~/js/site.js"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

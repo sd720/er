@@ -1,0 +1,16 @@
+## Compiled build output
+bin/
+obj/
+
+## User settings
+*.user
+.vs/
+.vscode/
+
+## Temp hash generator tool (not needed in submission)
+HashGen/
+update_password.sql
+
+## OS files
+.DS_Store
+Thumbs.db

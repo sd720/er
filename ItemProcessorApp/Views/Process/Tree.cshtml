@@ -1,0 +1,30 @@
+@model IEnumerable<ItemProcessorApp.Models.ProcessedItem>
+@{
+    ViewData["Title"] = "Processed Items Tree";
+}
+
+<div class="page-header">
+    <div>
+        <h2>🌳 Processed Items Tree</h2>
+        <p class="page-desc">Full parent-child hierarchy of all processed items.</p>
+    </div>
+    <a href="/Process/Create" class="btn btn-primary">+ Process Item</a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="card">
+        <div class="empty-state">
+            <p>No processed items yet. <a href="/Process/Create">Process your first item</a>.</p>
+        </div>
+    </div>
+}
+else
+{
+    <div class="tree-wrapper">
+        @foreach (var root in Model)
+        {
+            await Html.RenderPartialAsync("_TreeNode", root);
+        }
+    </div>
+}
